@@ -69,24 +69,13 @@ function get_namespace( $fqsen ) {
 	return implode( '\\', $parts );
 }
 
-/**
- * @return array
- */
-function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) {
+function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) : DocBlockData {
 	$docblock = $element->getDocBlock();
 	if ( ! $docblock ) {
-		return array(
-			'description'      => '',
-			'long_description' => '',
-			'tags'             => array(),
-		);
+		return new DocBlockData();
 	}
 
-	$output = array(
-		'description'      => preg_replace( '/[\n\r]+/', ' ', $docblock->getSummary() ),
-		'long_description' => fix_newlines( $docblock->getDescription() ),
-		'tags'             => array(),
-	);
+	$tags = [];
 
 	foreach ( $docblock->getTags() as $tag ) {
 		$tag_data = array(
@@ -135,10 +124,14 @@ function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) 
 			}
 		}
 
-		$output['tags'][] = $tag_data;
+		$tags[] = $tag_data;
 	}
 
-	return $output;
+	return new DocBlockData(
+		preg_replace( '/[\n\r]+/', ' ', $docblock->getSummary() ),
+		fix_newlines( $docblock->getDescription() ),
+		$tags,
+	);
 }
 
 /**
