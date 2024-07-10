@@ -61,7 +61,10 @@ final class Hook_ extends AbstractFactory {
 		return in_array( $calling, $functions );
 	}
 
-	protected function doCreate( ContextStack $context, Node $node, StrategyContainer $strategies ): void {
+	/**
+	 * @param Node $node
+	 */
+	protected function doCreate( ContextStack $context, $node, StrategyContainer $strategies ): void {
 		$expression = $node->expr;
 
 		// is 'filter'
