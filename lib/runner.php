@@ -208,20 +208,20 @@ function export_methods( array $methods ) : array {
 /**
  * @param HooksMetadata $hooks_metadata
  *
- * @return array
+ * @return array<int, HookData>
  */
-function export_hooks( HooksMetadata $hooks_metadata ) {
+function export_hooks( HooksMetadata $hooks_metadata ) : array {
 	$out = array();
 
 	/** @var Hook $hook */
 	foreach ( $hooks_metadata as $hook ) {
-		$out[] = array(
-			'name'      => $hook->getName(),
-			'line'      => $hook->getLocation()->getLineNumber(),
-			'end_line'  => $hook->getEndLocation()->getLineNumber(),
-			'type'      => $hook->getType(),
-			'arguments' => $hook->getArgs(),
-			'doc'       => export_docblock( $hook ),
+		$out[] = new HookData(
+			$hook->getName(),
+			$hook->getLocation()->getLineNumber(),
+			$hook->getEndLocation()->getLineNumber(),
+			$hook->getType(),
+			$hook->getArgs(),
+			export_docblock( $hook ),
 		);
 	}
 
