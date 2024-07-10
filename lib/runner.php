@@ -91,7 +91,8 @@ function export_docblock( $element ) {
 		);
 
 		if ( method_exists( $tag, 'getDescription' ) ) {
-			$tag_data['content'] = preg_replace( '/[\n\r]+/', ' ', $tag->getDescription() );
+			$description = $tag->getDescription();
+			$tag_data['content'] = preg_replace( '/[\n\r]+/', ' ', $description ?? '' );
 		}
 
 		if ( method_exists( $tag, 'getType' ) ) {
