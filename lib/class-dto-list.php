@@ -5,7 +5,7 @@ abstract readonly class DTOList extends DTO {
 	/**
 	 * @var array<int, DTO>
 	 */
-	public array $datalist;
+	private array $datalist;
 
 	public function __construct( DTO ...$dto ) {
 		$this->datalist = $dto;

@@ -19,8 +19,7 @@ abstract readonly class DTO implements \ArrayAccess {
 		return isset( $this->$offset );
 	}
 
-	#[\ReturnTypeWillChange]
-	public function offsetGet( $offset ) {
+	public function offsetGet( $offset ) : mixed {
 		return $this->$offset;
 	}
 
