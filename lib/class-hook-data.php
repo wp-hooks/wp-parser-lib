@@ -3,9 +3,6 @@
 namespace WP_Parser;
 
 final readonly class HookData extends DTO {
-	/**
-	 * @param array<int, mixed> $tags
-	 */
 	public function __construct(
 		public string $name,
 		public int $line,

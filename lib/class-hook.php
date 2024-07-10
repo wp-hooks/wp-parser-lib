@@ -6,6 +6,9 @@ use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Location;
 
 final readonly class Hook {
+	/**
+	 * @param array<int, string> $args
+	 */
 	public function __construct(
 		private string $name,
 		private ?DocBlock $docBlock,

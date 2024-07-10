@@ -4,7 +4,7 @@ namespace WP_Parser;
 abstract readonly class DTO implements \ArrayAccess, \JsonSerializable {
 	public function toArray() : array {
 		$vars = get_object_vars( $this );
-		$vars = array_filter( $vars, fn( $value ) => ( null !== $value ) );
+		$vars = array_filter( $vars, fn( $value ) : bool => ( null !== $value ) );
 
 		foreach ( $vars as &$value ) {
 			if ( $value instanceof DTO ) {

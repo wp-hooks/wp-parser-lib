@@ -3,7 +3,7 @@
 namespace WP_Parser;
 
 final readonly class DocBlockTagDataList extends DTOList {
-	public function __construct( DocBlockTagData ...$tag ) {
-		parent::__construct( ...$tag );
+	public function __construct( DocBlockTagData ...$data ) {
+		parent::__construct( ...$data );
 	}
 }
