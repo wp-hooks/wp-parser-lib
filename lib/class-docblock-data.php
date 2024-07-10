@@ -6,6 +6,6 @@ final readonly class DocBlockData extends DTO {
 	public function __construct(
 		public string $description = '',
 		public string $long_description = '',
-		public ?DocBlockTagsData $tags = null,
+		public ?DocBlockTagDataList $tags = null,
 	) {}
 }

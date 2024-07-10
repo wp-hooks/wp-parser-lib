@@ -138,7 +138,7 @@ function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) 
 	return new DocBlockData(
 		preg_replace( '/[\n\r]+/', ' ', $docblock->getSummary() ),
 		fix_newlines( $docblock->getDescription() ),
-		new DocBlockTagsData( ...$tags ),
+		new DocBlockTagDataList( ...$tags ),
 	);
 }
 
