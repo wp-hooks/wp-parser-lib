@@ -137,16 +137,16 @@ function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) 
 /**
  * @param \phpDocumentor\Reflection\Php\Argument[] $arguments
  *
- * @return array
+ * @return array<int, ArgumentData>
  */
-function export_arguments( array $arguments ) {
+function export_arguments( array $arguments ) : array {
 	$output = array();
 
 	foreach ( $arguments as $argument ) {
-		$output[] = array(
-			'name'    => '$' . $argument->getName(),
-			'default' => $argument->getDefault(),
-			'type'    => (string) $argument->getType(),
+		$output[] = new ArgumentData(
+			'$' . $argument->getName(),
+			$argument->getDefault(),
+			(string) $argument->getType(),
 		);
 	}
 
