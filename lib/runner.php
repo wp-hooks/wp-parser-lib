@@ -144,10 +144,8 @@ function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) 
 
 /**
  * @param \phpDocumentor\Reflection\Php\Argument[] $arguments
- *
- * @return array<int, ArgumentData>
  */
-function export_arguments( array $arguments ) : array {
+function export_arguments( array $arguments ) : ArgumentDataList {
 	$output = array();
 
 	foreach ( $arguments as $argument ) {
@@ -158,15 +156,13 @@ function export_arguments( array $arguments ) : array {
 		);
 	}
 
-	return $output;
+	return new ArgumentDataList( ...$output );
 }
 
 /**
  * @param \phpDocumentor\Reflection\Php\Property[] $properties
- *
- * @return array<int, PropertyData>
  */
-function export_properties( array $properties ) : array {
+function export_properties( array $properties ) : PropertyDataList {
 	$out = array();
 
 	foreach ( $properties as $property ) {
@@ -181,19 +177,16 @@ function export_properties( array $properties ) : array {
 		);
 	}
 
-	return $out;
+	return new PropertyDataList( ...$out );
 }
 
 /**
  * @param \phpDocumentor\Reflection\Php\Method[] $methods
- *
- * @return array<int, MethodData>
  */
-function export_methods( array $methods ) : array {
+function export_methods( array $methods ) : MethodDataList {
 	$output = array();
 
 	foreach ( $methods as $method ) {
-
 		$namespace = get_namespace( $method->getFqsen() );
 
 		$output[] = new MethodData(
@@ -210,15 +203,13 @@ function export_methods( array $methods ) : array {
 		);
 	}
 
-	return $output;
+	return new MethodDataList( ...$output );
 }
 
 /**
  * @param HooksMetadata $hooks_metadata
- *
- * @return array<int, HookData>
  */
-function export_hooks( HooksMetadata $hooks_metadata ) : array {
+function export_hooks( HooksMetadata $hooks_metadata ) : HookDataList {
 	$out = array();
 
 	/** @var Hook $hook */
@@ -233,7 +224,7 @@ function export_hooks( HooksMetadata $hooks_metadata ) : array {
 		);
 	}
 
-	return $out;
+	return new HookDataList( ...$out );
 }
 
 /**

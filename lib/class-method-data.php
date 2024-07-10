@@ -15,7 +15,7 @@ final readonly class MethodData extends DTO {
 		public bool $abstract,
 		public bool $static,
 		public string $visibility,
-		public array $arguments,
+		public ArgumentDataList $arguments,
 		public DocBlockData $doc,
 	) {}
 }
