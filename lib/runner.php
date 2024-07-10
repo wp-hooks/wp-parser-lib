@@ -179,29 +179,27 @@ function export_properties( array $properties ) : array {
 /**
  * @param \phpDocumentor\Reflection\Php\Method[] $methods
  *
- * @return array
+ * @return array<int, MethodData>
  */
-function export_methods( array $methods ) {
+function export_methods( array $methods ) : array {
 	$output = array();
 
 	foreach ( $methods as $method ) {
 
 		$namespace = get_namespace( $method->getFqsen() );
 
-		$method_data = array(
-			'name'       => $method->getName(),
-			'namespace'  => $namespace ? $namespace : '',
-			'line'       => $method->getLocation()->getLineNumber(),
-			'end_line'   => $method->getEndLocation()->getLineNumber(),
-			'final'      => $method->isFinal(),
-			'abstract'   => $method->isAbstract(),
-			'static'     => $method->isStatic(),
-			'visibility' => (string) $method->getVisibility(),
-			'arguments'  => export_arguments( $method->getArguments() ),
-			'doc'        => export_docblock( $method ),
+		$output[] = new MethodData(
+			$method->getName(),
+			$namespace ? $namespace : '',
+			$method->getLocation()->getLineNumber(),
+			$method->getEndLocation()->getLineNumber(),
+			$method->isFinal(),
+			$method->isAbstract(),
+			$method->isStatic(),
+			(string) $method->getVisibility(),
+			export_arguments( $method->getArguments() ),
+			export_docblock( $method ),
 		);
-
-		$output[] = $method_data;
 	}
 
 	return $output;
