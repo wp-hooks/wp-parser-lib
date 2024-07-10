@@ -8,6 +8,11 @@ use WP_Parser\HooksMetadata;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\File\LocalFile;
 use phpDocumentor\Reflection\Php\ProjectFactory;
+use phpDocumentor\Reflection\Php\Class_;
+use phpDocumentor\Reflection\Php\File;
+use phpDocumentor\Reflection\Php\Function_;
+use phpDocumentor\Reflection\Php\Method;
+use phpDocumentor\Reflection\Php\Property;
 
 /**
  * Fixes newline handling in parsed text.
@@ -65,11 +70,9 @@ function get_namespace( $fqsen ) {
 }
 
 /**
- * @param $element
- *
  * @return array
  */
-function export_docblock( $element ) {
+function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) {
 	$docblock = $element->getDocBlock();
 	if ( ! $docblock ) {
 		return array(
