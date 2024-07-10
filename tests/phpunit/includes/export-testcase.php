@@ -6,6 +6,7 @@
 
 namespace WP_Parser\Tests;
 
+use WP_Parser\DTO;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase as Polyfill_TestCase;
 
 /**
@@ -352,7 +353,13 @@ class Export_UnitTestCase extends Polyfill_TestCase {
 		$this->assertArrayHasKey( $doc_key, $entity );
 
 		foreach ( $docs as $key => $expected_value ) {
-			$this->assertEquals( $expected_value, $entity[ $doc_key ][ $key ] );
+			$actual = $entity[ $doc_key ][ $key ];
+
+			if ( $actual instanceof DTO ) {
+				$actual = $actual->toArray();
+			}
+
+			$this->assertEquals( $expected_value, $actual );
 		}
 	}
 

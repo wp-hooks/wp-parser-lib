@@ -107,7 +107,7 @@ function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) 
 			$tag_data['variable'] = $variable ? '$' . $variable : '';
 		}
 		if ( method_exists( $tag, 'getReference' ) ) {
-			$tag_data['refers'] = $tag->getReference();
+			$tag_data['refers'] = (string) $tag->getReference();
 		}
 		if ( method_exists( $tag, 'getVersion' ) ) {
 			// Version string.
@@ -124,13 +124,21 @@ function export_docblock( Property|Method|Hook|File|Function_|Class_ $element ) 
 			}
 		}
 
-		$tags[] = $tag_data;
+		$tags[] = new DocBlockTagData(
+			$tag_data['name'],
+			$tag_data['content'] ?? null,
+			$tag_data['types'] ?? null,
+			$tag_data['link'] ?? null,
+			$tag_data['variable'] ?? null,
+			$tag_data['refers'] ?? null,
+			$tag_data['description'] ?? null,
+		);
 	}
 
 	return new DocBlockData(
 		preg_replace( '/[\n\r]+/', ' ', $docblock->getSummary() ),
 		fix_newlines( $docblock->getDescription() ),
-		$tags,
+		new DocBlockTagsData( ...$tags ),
 	);
 }
 
