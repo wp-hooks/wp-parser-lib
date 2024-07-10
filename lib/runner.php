@@ -236,7 +236,10 @@ function export_hooks( HooksMetadata $hooks_metadata ) {
 /**
  * @param string $directory
  *
- * @return array
+ * @throws \InvalidArgumentException If the directory does not exist.
+ * @throws \RuntimeException If the directory contains a directory that cannot be recursed into.
+ *
+ * @return array<int, string>
  */
 function get_wp_files( $directory ) {
 
@@ -259,8 +262,8 @@ function get_wp_files( $directory ) {
 			}
 		}
 	} catch ( \UnexpectedValueException $exc ) {
-		return new \RuntimeException(
-			sprintf( 'Directory [%s] contained a directory we can not recurse into', $directory )
+		throw new \RuntimeException(
+			sprintf( 'Directory [%s] contains a directory that cannot be recursed into', $directory )
 		);
 	}
 
