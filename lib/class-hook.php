@@ -5,34 +5,15 @@ namespace WP_Parser;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Location;
 
-class Hook {
-	private string $name;
-
-	private ?DocBlock $docBlock;
-
-	private string $type;
-
-	private array $args;
-
-	private Location $location;
-
-	private Location $endLocation;
-
+final readonly class Hook {
 	public function __construct(
-		string $name,
-		?DocBlock $docBlock,
-		string $type,
-		array $args,
-		Location $location,
-		Location $endLocation
-	) {
-		$this->name        = $name;
-		$this->docBlock    = $docBlock;
-		$this->type        = $type;
-		$this->args        = $args;
-		$this->location    = $location;
-		$this->endLocation = $endLocation;
-	}
+		private string $name,
+		private ?DocBlock $docBlock,
+		private string $type,
+		private array $args,
+		private Location $location,
+		private Location $endLocation,
+	) {}
 
 	public function getName(): string {
 		return $this->name;
