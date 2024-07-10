@@ -1,7 +1,7 @@
 <?php
 namespace WP_Parser;
 
-abstract readonly class DTO implements \ArrayAccess {
+abstract readonly class DTO implements \ArrayAccess, \JsonSerializable {
 	public function toArray() : array {
 		$vars = get_object_vars( $this );
 		$vars = array_filter( $vars, fn( $value ) => ( null !== $value ) );
@@ -29,5 +29,9 @@ abstract readonly class DTO implements \ArrayAccess {
 
 	public function offsetUnset( $offset ) : void {
 		unset( $this->$offset );
+	}
+
+	public function jsonSerialize() : mixed {
+		return $this->toArray();
 	}
 }
