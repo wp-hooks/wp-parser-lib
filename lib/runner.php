@@ -218,8 +218,8 @@ function export_methods( array $methods ) {
 function export_hooks( HooksMetadata $hooks_metadata ) {
 	$out = array();
 
+	/** @var Hook $hook */
 	foreach ( $hooks_metadata as $hook ) {
-		/** @var Hook $hook */
 		$out[] = array(
 			'name'      => $hook->getName(),
 			'line'      => $hook->getLocation()->getLineNumber(),
@@ -271,8 +271,8 @@ function get_wp_files( $directory ) {
 }
 
 /**
- * @param array  $files
- * @param string $root
+ * @param array<int, string> $files
+ * @param string             $root
  *
  * @return array
  */
@@ -310,7 +310,6 @@ function parse_files( $files, $root ): array {
 			);
 		}
 
-		/** @var \phpDocument\Reflection\Php\Constant $constant */
 		foreach ( $file->getConstants() as $constant ) {
 			$out['constants'][] = array(
 				'name'  => $constant->getName(),
@@ -323,7 +322,6 @@ function parse_files( $files, $root ): array {
 			$out['hooks'] = export_hooks( $file->getMetadata()['hooks'] );
 		}
 
-		/** @var \phpDocument\Reflection\Php\Function_ $function */
 		foreach ( $file->getFunctions() as $function ) {
 
 			$namespace = get_namespace( $function->getFqsen() );
@@ -341,7 +339,6 @@ function parse_files( $files, $root ): array {
 			$out['functions'][] = $func;
 		}
 
-		/** @var \phpDocument\Reflection\Php\Class_ $class */
 		foreach ( $file->getClasses() as $class ) {
 
 			$parts = explode( '\\', ltrim( $class->getFqsen(), '\\' ) );
@@ -361,7 +358,6 @@ function parse_files( $files, $root ): array {
 				'properties' => export_properties( $class->getProperties() ),
 				'methods'    => export_methods( $class->getMethods() ),
 				'doc'        => export_docblock( $class ),
-
 			);
 
 			$out['classes'][] = $class_data;
@@ -369,5 +365,6 @@ function parse_files( $files, $root ): array {
 
 		$output[] = $out;
 	}
+
 	return $output;
 }

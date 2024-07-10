@@ -19,6 +19,7 @@ use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
+use PhpParser\Node;
 
 /**
  * Strategy to convert `hook` expressions to HookElement
@@ -59,10 +60,8 @@ final class Hook_ extends AbstractFactory {
 		// is hook?
 		return in_array( $calling, $functions );
 	}
-	/**
-	 * @param mixed $node
-	 */
-	protected function doCreate( ContextStack $context, $node, StrategyContainer $strategies ): void {
+
+	protected function doCreate( ContextStack $context, Node $node, StrategyContainer $strategies ): void {
 		$expression = $node->expr;
 
 		// is 'filter'
@@ -74,8 +73,6 @@ final class Hook_ extends AbstractFactory {
 
 		$file = $context->search( FileElement::class );
 		assert( $file instanceof FileElement );
-
-		$expression_args = $expression->args;
 
 		$name         = $this->determineName( $expression );
 		$doc_block    = $this->createDocBlock( $node->getDocComment(), $context->getTypeContext() );
@@ -100,8 +97,10 @@ final class Hook_ extends AbstractFactory {
 
 		return $cleanup_name;
 	}
+
 	/**
-	 * @return string[]
+	 * @return array<int, string>
+	 * @phpstan-return list<string>
 	 */
 	private function determineArgs( FuncCall $expression ): array {
 		$args = $expression->args;
@@ -148,13 +147,7 @@ final class Hook_ extends AbstractFactory {
 		return $type;
 	}
 
-
-	/**
-	 * @param string $name
-	 *
-	 * @return string
-	 */
-	private function cleanupName( $name ): string {
+	private function cleanupName( string $name ): string {
 		$matches = array();
 
 		// quotes on both ends of a string
