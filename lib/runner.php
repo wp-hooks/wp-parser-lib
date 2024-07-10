@@ -156,20 +156,20 @@ function export_arguments( array $arguments ) {
 /**
  * @param \phpDocumentor\Reflection\Php\Property[] $properties
  *
- * @return array
+ * @return array<int, PropertyData>
  */
-function export_properties( array $properties ) {
+function export_properties( array $properties ) : array {
 	$out = array();
 
 	foreach ( $properties as $property ) {
-		$out[] = array(
-			'name'       => '$' . $property->getName(),
-			'line'       => $property->getLocation()->getLineNumber(),
-			'end_line'   => $property->getEndLocation()->getLineNumber(),
-			'default'    => $property->getDefault(),
-			'static'     => $property->isStatic(),
-			'visibility' => (string) $property->getVisibility(),
-			'doc'        => export_docblock( $property ),
+		$out[] = new PropertyData(
+			'$' . $property->getName(),
+			$property->getLocation()->getLineNumber(),
+			$property->getEndLocation()->getLineNumber(),
+			$property->getDefault(),
+			$property->isStatic(),
+			(string) $property->getVisibility(),
+			export_docblock( $property ),
 		);
 	}
 
